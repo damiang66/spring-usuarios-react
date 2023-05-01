@@ -2,7 +2,7 @@ package com.damian.backen.usuarios.app.usuariosapp.controlador;
 
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,10 +56,12 @@ public class UsuarioControler {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         Optional<Usuario> r = service.findById(id);
+        
         if (r.isPresent()){
-            return ResponseEntity.noContent().build();
+            service.delete(id);
+            return ResponseEntity.noContent().build(); //204
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build(); //404
     }
 
     
