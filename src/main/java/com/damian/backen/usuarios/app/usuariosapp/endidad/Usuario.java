@@ -22,7 +22,7 @@ public class Usuario {
     @Size(min = 4,max = 8)
     @Column(unique = true)
     private String username;
-    //@NotBlank
+    @NotBlank
     private String password;
     @NotBlank
     @Email

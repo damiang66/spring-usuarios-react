@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.damian.backen.usuarios.app.usuariosapp.endidad.Usuario;
+import com.damian.backen.usuarios.app.usuariosapp.modelo.UsuarioRequest;
 import com.damian.backen.usuarios.app.usuariosapp.service.UsuarioService;
 
 import jakarta.validation.Valid;
@@ -59,7 +60,7 @@ public class UsuarioControler {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(usuario));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?>editar(@Valid @RequestBody Usuario usuario, BindingResult result,@PathVariable Long id){
+    public ResponseEntity<?>editar(@Valid @RequestBody UsuarioRequest usuario, BindingResult result,@PathVariable Long id){
         if (result.hasErrors()){
             return this.validar(result);
         }
