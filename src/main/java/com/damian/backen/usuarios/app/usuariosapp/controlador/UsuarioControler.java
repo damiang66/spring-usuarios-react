@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,7 @@ import com.damian.backen.usuarios.app.usuariosapp.endidad.Usuario;
 import com.damian.backen.usuarios.app.usuariosapp.service.UsuarioService;
 
 import jakarta.validation.Valid;
-
+@CrossOrigin(originPatterns = "*")
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioControler {
@@ -33,9 +34,9 @@ public class UsuarioControler {
     private ResponseEntity<?>validar(BindingResult result){
         Map<String,Object> errores = new HashMap<>();
         result.getFieldErrors().forEach(e->{
-            errores.put(e.getField(), "el campo"+ e.getField()+ " "+ e.getDefaultMessage());
+            errores.put(e.getField(), "el campo "+ e.getField()+ "  "+ e.getDefaultMessage());
         });
-        return new ResponseEntity<>(errores, HttpStatus.NOT_FOUND);
+        return ResponseEntity.badRequest().body(errores);
     }
     @GetMapping
     public ResponseEntity<?> findAll(){
