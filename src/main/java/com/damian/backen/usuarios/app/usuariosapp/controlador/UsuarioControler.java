@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.damian.backen.usuarios.app.usuariosapp.dto.UsuarioDto;
 import com.damian.backen.usuarios.app.usuariosapp.endidad.Usuario;
 import com.damian.backen.usuarios.app.usuariosapp.modelo.UsuarioRequest;
+import com.damian.backen.usuarios.app.usuariosapp.repositorio.UsuarioRepositorio;
 import com.damian.backen.usuarios.app.usuariosapp.service.UsuarioService;
 
 import jakarta.validation.Valid;
@@ -30,6 +32,8 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioControler {
+    @Autowired
+    private UsuarioRepositorio repositorio;
     @Autowired
     private UsuarioService service;
     private ResponseEntity<?>validar(BindingResult result){
@@ -45,7 +49,7 @@ public class UsuarioControler {
     }
     @GetMapping("/{id}")
     public ResponseEntity<?>findById(@PathVariable Long id){
-        Optional<Usuario> r = service.findById(id);
+        Optional<UsuarioDto> r = service.findById(id);
         if(r.isPresent()){
            return ResponseEntity.ok().body(r.get());
         }
@@ -64,7 +68,7 @@ public class UsuarioControler {
         if (result.hasErrors()){
             return this.validar(result);
         }
-        Optional<Usuario> r = service.findById(id);
+        Optional<Usuario> r = repositorio.findById(id);
         if (r.isPresent()){
             Usuario usuarioDb = r.get();
             usuarioDb.setUsername(usuario.getUsername());
@@ -76,7 +80,7 @@ public class UsuarioControler {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
-        Optional<Usuario> r = service.findById(id);
+        Optional<UsuarioDto> r = service.findById(id);
         
         if (r.isPresent()){
             service.delete(id);
