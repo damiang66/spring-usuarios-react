@@ -7,10 +7,12 @@ public class UsuarioDto {
     private Long id;
     private String username;
     private String email;
-    public UsuarioDto(Long id, String username, String email) {
+    private boolean admin;
+    public UsuarioDto(Long id, String username, String email, boolean isAdmin) {
         this.id = id;
         this.username = username;
         this.email = email;
+        this.admin= isAdmin;
     }
     
 }

@@ -15,5 +15,5 @@ public class UsuarioRequest {
     @NotBlank
     @Email
     private String email;
-    
+    private boolean admin;
 }

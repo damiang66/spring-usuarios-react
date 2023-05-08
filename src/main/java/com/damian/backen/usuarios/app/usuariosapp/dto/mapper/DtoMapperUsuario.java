@@ -30,7 +30,8 @@ public class DtoMapperUsuario {
             throw new RuntimeException("Debe pasar la entidad usuario");
 
         }
-        return  new UsuarioDto(this.usuario.getId(),this.usuario.getUsername(),this.usuario.getEmail());
+        boolean isAdmin = usuario.getRoles().stream().anyMatch(r-> "ROLE_ADMIN".equals(r.getNombre()));
+        return  new UsuarioDto(this.usuario.getId(),this.usuario.getUsername(),this.usuario.getEmail(),isAdmin);
     }
 
 }

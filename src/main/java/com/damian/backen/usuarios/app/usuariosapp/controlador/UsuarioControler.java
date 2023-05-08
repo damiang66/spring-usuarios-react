@@ -71,8 +71,10 @@ public class UsuarioControler {
         Optional<Usuario> r = repositorio.findById(id);
         if (r.isPresent()){
             Usuario usuarioDb = r.get();
+            System.out.println("desde el controlador"+ usuarioDb.isAdmin());
             usuarioDb.setUsername(usuario.getUsername());
             usuarioDb.setEmail(usuario.getEmail());
+            usuarioDb.setAdmin(usuario.isAdmin());
             return ResponseEntity.status(HttpStatus.CREATED).body(service.save(usuarioDb));
         }
         return ResponseEntity.notFound().build();

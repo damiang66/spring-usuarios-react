@@ -49,12 +49,24 @@ public class UsuarioServiceImpl implements UsuarioService {
 
    @Override
    public UsuarioDto save(Usuario usuario) {
-      String passwordBc = passwordEncoder.encode(usuario.getPassword());
-      usuario.setPassword(passwordBc);
+
+      String passwordBc = passwordEncoder.encode(usuario.getPassword());Optional<Usuario> verificar = repositorio.findByUsername(usuario.getUsername());
+     if(verificar.isEmpty()){
+         usuario.setPassword(passwordBc);
+
+     }
+
       Optional<Rol> o = rolRepositio.findByNombre("ROLE_USER");
       List<Rol> roles = new ArrayList();
       if (o.isPresent()) {
          roles.add(o.get());
+      }
+      System.out.println(usuario.isAdmin());
+      if(usuario.isAdmin()){
+         Optional<Rol> or = rolRepositio.findByNombre("ROLE_ADMIN");
+         if (or.isPresent()){
+            roles.add(or.get());
+         }
       }
       usuario.setRoles(roles);
 
